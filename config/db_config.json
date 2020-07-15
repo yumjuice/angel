@@ -1,0 +1,7 @@
+{
+    "host": "localhost",
+    "user": "root",
+    "password": "kyj514804",
+    "database": "mkit",
+    "connectionLimit": 30
+  }
