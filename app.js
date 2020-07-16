@@ -4,7 +4,6 @@ var path       = require('path');
 var bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
 
 app.set('views', path.join(__dirname, 'views')); // ejs file location
 app.set('view engine', 'ejs'); //select view templet engine
@@ -30,6 +29,6 @@ app.get('/', function(req, res){
 //app.use('/auth', require('./api/auth'));
 
 // Server
-app.listen(port, function(){
-  console.log('listening on port:' + port);
-});
+app.listen(process.env.PORT || 3000, function(){
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  });
