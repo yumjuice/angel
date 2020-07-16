@@ -1,7 +1,7 @@
 {
-    "host": "localhost",
-    "user": "root",
-    "password": "kyj514804",
-    "database": "mkit",
+    "host": "us-cdbr-east-02.cleardb.com",
+    "user": "bf49a58d964b70",
+    "password": "abeea474",
+    "database": "heroku_6f14f30ec8ba2ca",
     "connectionLimit": 30
   }

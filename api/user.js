@@ -18,7 +18,7 @@ router.post('/', function(req,res,next){
     
     
     getConnection((conn)=>{
-        var sql = "INSERT INTO mkit.user (userId,userPw,nickName,phone,address,cardNum,validDate,cardPw) VALUES (?,?,?,?,?,?,?,?)"
+        var sql = "INSERT INTO user (userId,userPw,nickName,phone,address,cardNum,validDate,cardPw) VALUES (?,?,?,?,?,?,?,?)"
         conn.query(
             sql, // excute sql
             [userId, userPw, nickName,phone,address, cardNum,validDate,cardPw], // ? <- value
@@ -44,7 +44,7 @@ router.get('/',auth,function(req,res,next){
     var userId=req.decoded.userId;
     
     getConnection((conn)=>{
-        var sql = "SELECT * FROM user WHERE id=?"
+        var sql = "SELECT * FROM user WHERE userId=?"
         conn.query(
             sql, // excute sql
             [userId], // ? <- value
@@ -55,8 +55,14 @@ router.get('/',auth,function(req,res,next){
                     throw err;
                 }
                 else {
-
-                    res.json(util.successTrue(null,'유저 정보'))
+                    var user={
+                        'userId':result[0].userId,
+                        'nickName':result[0].nickName,
+                        'phone':result[0].phone,
+                        'address':result[0].address,
+                       
+                    }
+                    res.json(util.successTrue(user,'유저 정보'))
                 }
         })
         conn.release();
