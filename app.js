@@ -27,6 +27,7 @@ app.get('/', function(req, res){
 // API
 app.use('/user', require('./api/user'));
 app.use('/auth', require('./api/auth'));
+app.use('/categories', require('./api/categories'));
 
 // Server
 app.listen(process.env.PORT || 3000, function(){
