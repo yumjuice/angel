@@ -37,4 +37,31 @@ router.post('/', function(req,res,next){
     });
 });
 
+
+// 로그인한 유저정보 가져오기
+router.get('/',auth,function(req,res,next){
+   
+    var userId=req.decoded.userId;
+    
+    getConnection((conn)=>{
+        var sql = "SELECT * FROM user WHERE id=?"
+        conn.query(
+            sql, // excute sql
+            [userId], // ? <- value
+            function(err, result){
+                if(err){
+                    console.error(err);
+                    res.json(util.successFalse(err));
+                    throw err;
+                }
+                else {
+
+                    res.json(util.successTrue(null,'유저 정보'))
+                }
+        })
+        conn.release();
+    });
+});
+
+
 module.exports = router;
