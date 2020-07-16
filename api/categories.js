@@ -39,6 +39,43 @@ router.get('/', function(req,res,next){
     });
 });
 
+router.get('/:id', function(req,res,next){
+   
+    var categoryKey=req.params.id;
+    
+    getConnection((conn)=>{
+        var sql = "SELECT * FROM company WHERE categoryKey=?"
+        conn.query(
+            sql, // excute sql
+            [categoryKey], // ? <- value
+            function(err, result){
+                if(err){
+                    console.error(err);
+                    res.json(util.successFalse(err));
+                    throw err;
+                }
+                else {
+                    var restaurants=[]
+                    result.forEach(function(element){
+                        var restaurant={
+                            'id':element.companyKey,
+                            'name':element.name,
+                            'phone':element.phone,
+                            'address':element.address,
+                            'img':element.img,
+                            'description':element.description,
+                            'category':element.categoryKey
+
+                        }
+                        restaurants.push(restaurant)
+                        
+                    });
+                    res.json(util.successTrue(restaurants,'카테고리별 식당 리스트'))
+                }
+        })
+        conn.release();
+    });
+});
 
 
 
