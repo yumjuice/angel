@@ -3,5 +3,6 @@
     "user": "bf49a58d964b70",
     "password": "abeea474",
     "database": "heroku_6f14f30ec8ba2ca",
-    "connectionLimit": 30
-  }
+    "connectionLimit": 30,
+    "multipleStatements": true
+}

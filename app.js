@@ -29,7 +29,7 @@ app.use('/user', require('./api/user'));
 app.use('/auth', require('./api/auth'));
 app.use('/categories', require('./api/categories'));
 app.use('/restaurants', require('./api/restaurants'));
-
+app.use('/orderlist', require('./api/orderlist'));
 // Server
 app.listen(process.env.PORT || 3000, function(){
     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);

@@ -25,8 +25,8 @@ router.get('/', function(req,res,next){
                     result.forEach(function(element){
                         var category={
                             'id':element.categoryKey,
-                            'category':element.name,
-                            'img':element.img,
+                            'category':element.cName,
+                            'img':element.cImg,
 
                         }
                         categories.push(category)
