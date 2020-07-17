@@ -44,7 +44,7 @@ router.get('/:id', function(req,res,next){
     var categoryKey=req.params.id;
     
     getConnection((conn)=>{
-        var sql = "SELECT * FROM company WHERE categoryKey=?"
+        var sql = "SELECT * FROM company AS C INNER JOIN category AS A ON C.categoryKey=A.categoryKey WHERE C.categoryKey=?"
         conn.query(
             sql, // excute sql
             [categoryKey], // ? <- value
@@ -70,7 +70,13 @@ router.get('/:id', function(req,res,next){
                         restaurants.push(restaurant)
                         
                     });
-                    res.json(util.successTrue(restaurants,'카테고리별 식당 리스트'))
+                    
+                    var data={
+                        'category':result[0].cName,
+                        'categoryImg':result[0].cImg,
+                        'restaurants':restaurants
+                    }
+                    res.json(util.successTrue(data,'카테고리별 식당 리스트'))
                 }
         })
         conn.release();

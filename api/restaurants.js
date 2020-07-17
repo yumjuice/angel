@@ -48,7 +48,7 @@ router.get('/:id', function(req,res,next){
     var companyKey=req.params.id;
     
     getConnection((conn)=>{
-        var sql = "SELECT * FROM company AS C INNER JOIN item AS I ON C.companyKey=I.companyKey WHERE C.companyKey=?;"
+        var sql = "SELECT * FROM company AS C INNER JOIN item AS I ON C.companyKey=I.companyKey WHERE C.companyKey=?"
         conn.query(
             sql, // excute sql
             [companyKey], // ? <- value
