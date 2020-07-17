@@ -7,16 +7,17 @@ const mysql = require('mysql');
 
 
 // 주문내역보여주기
-/*
-router.get('/', function(req,res,next){
+
+router.get('/',auth, function(req,res,next){
    
+    var userId=req.decoded.userId;
     
     
     getConnection((conn)=>{
-        var sql = "SELECT * FROM category"
+        var sql = "select * from (select * from (select * from orderlist natural join itemlist where orderlist.userKey=(select userKey from user where userId=?)) AS a natural join item) as b natural join company order by b.orderDate desc;"
         conn.query(
             sql, // excute sql
-            [], // ? <- value
+            [userId], // ? <- value 
             function(err, result){
                 if(err){
                     console.error(err);
@@ -24,24 +25,100 @@ router.get('/', function(req,res,next){
                     throw err;
                 }
                 else {
-                    var categories=[]
+                   
+                   
+                    var orderList=[]
+                   
+               
                     result.forEach(function(element){
-                        var category={
-                            'id':element.categoryKey,
-                            'category':element.name,
-                            'img':element.img,
-
+                        if(orderList.length==0){
+                            var itemlist=[]
+                            var item={
+                                "itemKey" : element.itemKey ,
+                                    "name" : element.iName,
+                                    "img":element.iImg,
+                                    "price" : element.price,
+                                    "count" : element.count,
+                                    "description" : element.iDescription
+    
+                            }
+                            itemlist.push(item);
+                            var order={
+                                "companyKey" : element.companyKey,
+                                "companyName" : element.name,
+                                "companyImg" : element.img,
+                                "orderlistKey": element.orderlistKey,
+                                "orderDate" : element.orderDate,
+                                "arrivalDate" : element.arrivalTime,
+                                "state" : element.state,
+                                "itemList" : itemlist
+                            }
+                            orderList.push(order);
+                            return true;
                         }
-                        categories.push(category)
+                        var i;
+                        for(i=0;i<orderList.length;i++){
+                           
+                            if(orderList[i]["orderlistKey"]==element.orderlistKey){ //이미 주문객체가 있을 경우
+                                var item={
+                                    "itemKey" : element.itemKey ,
+                                    "name" : element.iName,
+                                    "img":element.iImg,
+                                    "price" : element.price,
+                                    "count" : element.count,
+                                    "description" : element.iDescription
+        
+                                }
+                                orderList[i]["itemList"].push(item);
+                                break;
+                            }
+                        }
+                           if(i==orderList.length){
+                                var itemlist=[]
+                                var item={
+                                    "itemKey" : element.itemKey ,
+                                    "name" : element.iName,
+                                    "img":element.iImg,
+                                    "price" : element.price,
+                                    "count" : element.count,
+                                    "description" : element.iDescription
+        
+                                }
+                                itemlist.push(item);
+                                var order={
+                                    "companyKey" : element.companyKey,
+                                    "companyName" : element.name,
+                                    "companyImg" : element.img,
+                                    "orderlistKey": element.orderlistKey,
+                                    "orderDate" : element.orderDate,
+                                    "arrivalDate" : element.arrivalTime,
+                                    "state" : element.state,
+                                    "itemList" : itemlist
+                                }
+                                orderList.push(order);
+                            
+                            
+                        }
+                        
+                        
                         
                     });
-                    res.json(util.successTrue(categories,'카테고리 목록'))
+                    
+                    
+                    var data=
+                        {
+                            "orderList":orderList
+                        }
+
+                    
+                   
+                    res.json(util.successTrue(data,'주문내역'))
                 }
         })
         conn.release();
     });
 });
-*/
+
 
 // 주문데이터 추가하기
 router.post('/',auth,function(req,res,next){
