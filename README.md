@@ -10,7 +10,6 @@ AngelHack 2020 팀 **엔뽀**의 서비스 [반짝식당](http://angel-popup-sto
 ## Skills
 
 Front-end
--
 
 Back-end
 - Node.js
