@@ -134,7 +134,7 @@ router.post('/',auth,function(req,res,next){
     
     
     getConnection((conn)=>{
-        var sql = "insert into orderlist values(null,(select userKey from user where userId=?),DATE_ADD(NOW(), INTERVAL 9 HOUR),DATE_ADD(DATE_ADD(NOW(), INTERVAL 9 HOUR), INTERVAL 1 DAY),default);"
+        var sql = "insert into orderlist values(null,(select userKey from user where userId=?),DATE_ADD(NOW(), INTERVAL 9 HOUR),DATE_ADD(DATE_ADD(NOW(), INTERVAL 9 HOUR), INTERVAL 1 HOUR),default);"
        
         conn.query(
             sql, // excute sql
