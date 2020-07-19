@@ -2,15 +2,16 @@ var express  = require('express');
 var router   = express.Router();
 var getConnection = require('../config/db');
 var util     = require('../util');
+var auth     = require('../logged');
 
 
-// 레스토랑 목록 보여주기
+// 지금 배달 가능한 레스토랑 목록 보여주기
 router.get('/', function(req,res,next){
    
     
     
     getConnection((conn)=>{
-        var sql = "SELECT * FROM company"
+        var sql = "select * from company where isOpen=1 order by rand() LIMIT 3;"
         conn.query(
             sql, // excute sql
             [], // ? <- value
@@ -30,7 +31,11 @@ router.get('/', function(req,res,next){
                             'address':element.address,
                             'img':element.img,
                             'description':element.description,
-                            'category':element.categoryKey
+                            'category':element.categoryKey,
+                            'isOpen':element.isOpen,
+                            'foodImg':element.foodImg,
+                            'detailDescription':element.detailDescription,
+                            'likeNum' : likeNum
 
                         }
                         restaurants.push(restaurant)
@@ -83,6 +88,11 @@ router.get('/:id', function(req,res,next){
                         'img':result[0].img,
                         'description':result[0].description,
                         'category':result[0].categoryKey,
+                        'isOpen':element.isOpen,
+                        'foodImg':element.foodImg,
+                        'detailDescription':element.detailDescription,
+                        'likeNum' : likeNum,
+
                         'items':items
                     }
                    
@@ -94,6 +104,31 @@ router.get('/:id', function(req,res,next){
 });
 
 
+router.patch('/:id/likenum',auth, function(req,res,next){
+   
+    var companyKey=req.params.id;
+    
+    getConnection((conn)=>{
+        var sql = "update company set likeNum=likeNum+1 where companyKey=?"
+        conn.query(
+            sql, // excute sql
+            [companyKey], // ? <- value
+            function(err, result){
+                if(err){
+                    console.error(err);
+                    res.json(util.successFalse(err));
+                    throw err;
+                }
+                else {
 
+
+                    res.json(util.successTrue(null,'좋아요 추가'))
+                }
+
+            })
+            conn.release();
+        });
+    });
+    
 
 module.exports = router;

@@ -64,7 +64,12 @@ router.get('/:id', function(req,res,next){
                             'address':element.address,
                             'img':element.img,
                             'description':element.description,
-                            'category':element.categoryKey
+                            'category':element.categoryKey,
+                            'isOpen':element.isOpen,
+                            'foodImg':element.foodImg,
+                            'detailDescription':element.detailDescription,
+                            'likeNum' : likeNum
+
 
                         }
                         restaurants.push(restaurant)
