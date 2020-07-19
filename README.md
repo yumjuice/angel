@@ -17,3 +17,6 @@ Back-end
 - mysql
 - express framework
 
+## Build
+`node app.js`
+
