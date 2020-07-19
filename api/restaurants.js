@@ -35,7 +35,7 @@ router.get('/', function(req,res,next){
                             'isOpen':element.isOpen,
                             'foodImg':element.foodImg,
                             'detailDescription':element.detailDescription,
-                            'likeNum' : likeNum
+                            'likeNum' : element.likeNum
 
                         }
                         restaurants.push(restaurant)
@@ -88,10 +88,10 @@ router.get('/:id', function(req,res,next){
                         'img':result[0].img,
                         'description':result[0].description,
                         'category':result[0].categoryKey,
-                        'isOpen':element.isOpen,
-                        'foodImg':element.foodImg,
-                        'detailDescription':element.detailDescription,
-                        'likeNum' : likeNum,
+                        'isOpen':result[0].isOpen,
+                        'foodImg':result[0].foodImg,
+                        'detailDescription':result[0].detailDescription,
+                        'likeNum' : result[0].likeNum,
 
                         'items':items
                     }
