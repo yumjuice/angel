@@ -68,7 +68,7 @@ router.get('/:id', function(req,res,next){
                             'isOpen':element.isOpen,
                             'foodImg':element.foodImg,
                             'detailDescription':element.detailDescription,
-                            'likeNum' : likeNum
+                            'likeNum' : element.likeNum
 
 
                         }
