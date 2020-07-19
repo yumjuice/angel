@@ -1,4 +1,4 @@
-# TEAM 엔뽀's Back-end
+# TEAM 뽀's Back-end
 
 AngelHack 2020 팀 **엔뽀**의 서비스 [반짝식당](http://angel-popup-store.herokuapp.com)의 Backend Repository입니다.
 
